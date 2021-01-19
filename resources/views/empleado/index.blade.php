@@ -1,70 +1,89 @@
 @extends('layouts.app')
 
+<style>
+    .ph-center::-webkit-input-placeholder {
+            text-align: center;
+            /* Centrado vertical */
+        }
+
+        .ph-center:-moz-placeholder {
+            /* Firefox 19+ */
+            text-align: center;
+        }
+</style>
+
 @section('content')
-<div class="container">
-    @if(Session::has('mensaje'))
-        <div class="alert alert-success alert-dismissible" role="alert">
+    <div class="container d-flex flex-wrap justify-content-center align-items-center border border-secondary rounded">
 
-            {{ Session::get('mensaje') }}
-
-
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-
+        <div class="row d-flex justify-content-center py-4">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo"
+                class="img-fluid" style="width: 65%">
         </div>
-    @endif
+      
+    
+        <div class="card-deck py-4 row">
+          
+            <div class="card border-0">
+                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                    <img src="{{ asset('images/Avatar.png') }}" class="img-fluid "  width="50px"  alt="...">
+                </div>
+                
+              <div class="card-body rounded text-white bg-danger border-danger"
+                <h4 class="card-title text-center font-weight-bold">Asistente de servicio</h4>
+                <input type="text" name="" id="" placeholder="Número de colaborador" class="ph-center form-control mb-4">
+                <select class="ph-center form-control mb-4" id="selectServicio">
+                    <option>Comunicación interna</option>
+                    <option>Administración</option>
+                    <option>Relaciones Laborales</option>
+                  </select>
+                <a href="{{ url('empleado/create') }}" class="btn btn-light d-flex justify-content-center">Buscar -></a>
+              </div>
+            </div>
+            
+            <div class="card border-0">
+                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                    <img src="{{ asset('images/Document.png') }}" class="img-fluid "  width="50px"  alt="...">
+                </div>
 
-    <a href="{{ url('empleado/create') }}" class="btn btn-success">Registrar nuevo colaborador</a>
-    <br>
-    <br>
-    <table class="table table-light">
-        <thead class="thead-light">
-            <tr>
-                <th class="text-center">Número de Colaborador</th>
-                <th class="text-center">Foto</th>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Apellido Paterno</th>
-                <th class="text-center">Apellido Materno</th>
-                <th class="text-center">Correo</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
+              <div class="card-body rounded text-white bg-danger">
+                <h4 class="card-title text-center font-weight-bold">Generación de Listas</h4>
+                <p class="card-text text-center font-italic">Selecciona el tipo de lista que quieres descargar</p>
+                <select class="ph-center form-control mb-4" id="selectListas">
+                    <option>Quinquenios</option>
+                    <option>Día de la Madre</option>
+                    <option>Día del Padre</option>
+                    <option>Tarjetas de Fin de Año</option>
+                    <option>Cumpleaños</option>
+                    <option>Útiles Escolares</option>
+                  </select>
+                <a href="#" class="btn btn-light d-flex justify-content-center">Descargar</a>
+              </div>
+            </div>
 
-        <tbody>
-            @foreach( $empleados as $empleado )
-                <tr>
-                    <td class="text-center">{{ $empleado->id }}</td>
+            <div class="card border-0">
 
-                    <td>
-                        <img style="width: 150px"
-                            src="{{ asset('storage').'/'.$empleado->Foto }}"
-                            alt="" class="img-fluid rounded shadow border border-secondary">
-                    </td>
+                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                    <img src="{{ asset('images/Clip.png') }}" class="img-fluid "  width="50px"  alt="...">
+                </div>
+                
+              <div class="card-body rounded text-white bg-danger">
+                <h4 class="card-title text-center font-weight-bold">Creación de documentos</h4>
+                <p class="card-text text-center font-italic">Selecciona el tipo de documento que quieres crear</p>
+                <select class="ph-center form-control mb-4" id="selectDocumentos">
+                    <option>Constancia</option>
+                    <option>Contrato</option>
+                  </select>
+                <a href="#" class="btn btn-light d-flex justify-content-center">Crear documento -></a>
+              </div>
+            </div>
+          </div>
 
-                    <td class="text-center">{{ $empleado->Nombre }}</td>
-                    <td class="text-center">{{ $empleado->ApellidoPaterno }}</td>
-                    <td class="text-center">{{ $empleado->ApellidoMaterno }}</td>
-                    <td class="text-center">{{ $empleado->Correo }}</td>
-                    <td class="text-center">
-                        <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}"
-                            class="btn btn-warning">
-                            Editar
-                        </a>
 
-                        <form action="{{ url('/empleado/'.$empleado->id) }}" class="d-inline"
-                            method="post">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            <input type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-danger"
-                                value="Borrar">
-                        </form>
-
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    {!! $empleados->links() !!}
-</div>
+        <footer class="footer d-flex align-items-end">
+            <div id="footer" class="container text-center">
+                <h6 style="letter-spacing: 3pt;" class="text-secondary text-monospace">Comunicación Interna · 2021
+                    &copy; Aguila Ammunition</h6>
+            </div>
+        </footer>
+    </div>
 @endsection
