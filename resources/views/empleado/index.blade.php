@@ -24,11 +24,11 @@
         <div class="card-deck py-4 row">
           
             <div class="card border-0">
-                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                <div class="p-3 d-flex justify-content-center " style="background-color: #F8FAFC">
                     <img src="{{ asset('images/Avatar.png') }}" class="img-fluid "  width="50px"  alt="...">
                 </div>
                 
-              <div class="card-body rounded text-white bg-danger border-danger"
+              <div class="card-body rounded text-white bg-danger border-danger">
                 <h4 class="card-title text-center font-weight-bold">Asistente de servicio</h4>
                 <input type="text" name="" id="" placeholder="Número de colaborador" class="ph-center form-control mb-4">
                 <select class="ph-center form-control mb-4" id="selectServicio">
@@ -41,7 +41,7 @@
             </div>
             
             <div class="card border-0">
-                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                <div class="p-3 d-flex justify-content-center " style="background-color: #F8FAFC">
                     <img src="{{ asset('images/Document.png') }}" class="img-fluid "  width="50px"  alt="...">
                 </div>
 
@@ -62,7 +62,7 @@
 
             <div class="card border-0">
 
-                <div class="p-5 d-flex justify-content-center " style="background-color: #F8FAFC">
+                <div class="p-3 d-flex justify-content-center " style="background-color: #F8FAFC">
                     <img src="{{ asset('images/Clip.png') }}" class="img-fluid "  width="50px"  alt="...">
                 </div>
                 

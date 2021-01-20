@@ -30,7 +30,7 @@
     </style>
 </head>
 
-<body class="overflow-hidden">
+<body class="">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
