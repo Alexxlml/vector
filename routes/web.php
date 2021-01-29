@@ -27,6 +27,7 @@ Route::resource('empleado', EmpleadoController::class)->middleware('auth');
 Auth::routes(['register'=>false,'reset'=>false]);
 
 Route::get('/home', [EmpleadoController::class, 'index'])->name('home');
+Route::get('/home/empleado/consulta', [EmpleadoController::class, 'show'])->name('consulta');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [EmpleadoController::class, 'index'])->name('home');
