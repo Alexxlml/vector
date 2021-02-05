@@ -70,6 +70,10 @@ class EmpleadoController extends Controller
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|numeric',
             'paternidad' => 'required|numeric',
+            'domicilio' => 'required|string|max:60',
+            'municipio' => 'required|string|max:45',
+            'estado' => 'required|string|max:45',
+            'codigo_postal' => 'required|string|max:45',
             'turno' => 'required|numeric',
             'puesto' => 'required|numeric',
             'area' => 'required|numeric',
@@ -92,6 +96,10 @@ class EmpleadoController extends Controller
             'ap_paterno.required' => 'El Apellido Paterno es obligatorio y no puede contener números o caracteres especiales',
             'ap_materno.required' => 'El Apellido Materno es obligatorio y no puede contener números o caracteres especiales',
             'fecha_nacimiento.required' => 'La Fecha de Nacimiento no puede estar vacía',
+            'domicilio' => 'El Domicilio no puede estar vacío',
+            'municipio' => 'El Municipio no puede estar vacío',
+            'estado' => 'El Estado no puede estar vacío',
+            'codigo_postal' => 'El Código Postal no puede estar vacío',
             'correo.required' => 'El Correo debe ser válido',
             'tel_fijo.required' => 'El Teléfono Fijo debe contener un máximo de 10 dígitos y no puede contener letras o caracteres especiales',
             'tel_movil.required' => 'El Teléfono Móvil debe contener un máximo de 10 dígitos y no puede contener letras o caracteres especiales',
@@ -106,7 +114,7 @@ class EmpleadoController extends Controller
         //$datosColaborador = $request->all();
 
         $datosColaborador = request()->except('_token');
-        try {
+        /* try { */
 
 
 
@@ -122,8 +130,12 @@ class EmpleadoController extends Controller
                     'ap_materno' => $datosColaborador['ap_materno'],
                     'fecha_nacimiento' => $datosColaborador['fecha_nacimiento'],
                     'genero' => $datosColaborador['genero'],
+                    'estado_civil' => $datosColaborador['edoCivil'],
+                    'domicilio' => $datosColaborador['domicilio'],
+                    'municipio' => $datosColaborador['municipio'],
+                    'estado' => $datosColaborador['estado'],
+                    'codigo_postal' => $datosColaborador['codigo_postal'],
                     'paternidad' => $datosColaborador['paternidad'],
-                    'num_edad' => $datosColaborador['num_edad'],
                     'turno' => $datosColaborador['turno'],
                     'ruta_transporte' => $datosColaborador['ruta'],
                     'puesto' => $datosColaborador['puesto'],
@@ -131,6 +143,7 @@ class EmpleadoController extends Controller
                     'correo' => $datosColaborador['correo'],
                     'tel_fijo' => $datosColaborador['tel_fijo'],
                     'tel_movil' => $datosColaborador['tel_movil'],
+                    'tel_recados' => $datosColaborador['tel_recados'],
                     'extension' => $datosColaborador['extension'],
                     'clave_radio' => $datosColaborador['clave_radio'],
                     'supervisor' => $datosColaborador['supervisor'],
@@ -147,9 +160,10 @@ class EmpleadoController extends Controller
                     'eval_gen' => '0',
                     'eval_asig' => '0',
                     'eval_cal' => '0',
-                    'estado' => '1',
+                    'estado_colaborador' => '1',
                     'foto' => $datosColaborador['foto']
                 ]);
+                // TODO Línea 896 arreglar los switches
             } else if ($datosColaborador['tipo_colaborador'] == 2) {
                 DB::table('colaborador')->insert([
                     'no_colaborador' => $datosColaborador['no_colaborador'],
@@ -158,8 +172,12 @@ class EmpleadoController extends Controller
                     'ap_materno' => $datosColaborador['ap_materno'],
                     'fecha_nacimiento' => $datosColaborador['fecha_nacimiento'],
                     'genero' => $datosColaborador['genero'],
+                    'estado_civil' => $datosColaborador['edoCivil'],
+                    'domicilio' => $datosColaborador['domicilio'],
+                    'municipio' => $datosColaborador['municipio'],
+                    'estado' => $datosColaborador['estado'],
+                    'codigo_postal' => $datosColaborador['codigo_postal'],
                     'paternidad' => $datosColaborador['paternidad'],
-                    'num_edad' => $datosColaborador['num_edad'],
                     'turno' => $datosColaborador['turno'],
                     'ruta_transporte' => $datosColaborador['ruta'],
                     'puesto' => $datosColaborador['puesto'],
@@ -167,6 +185,7 @@ class EmpleadoController extends Controller
                     'correo' => $datosColaborador['correo'],
                     'tel_fijo' => $datosColaborador['tel_fijo'],
                     'tel_movil' => $datosColaborador['tel_movil'],
+                    'tel_recados' => '',
                     'extension' => $datosColaborador['extension'],
                     'clave_radio' => $datosColaborador['clave_radio'],
                     'supervisor' => $datosColaborador['supervisor'],
@@ -183,26 +202,60 @@ class EmpleadoController extends Controller
                     'eval_gen' => '0',
                     'eval_asig' => '0',
                     'eval_cal' => '0',
-                    'estado' => '1',
+                    'estado_colaborador' => '1',
                     'foto' => $datosColaborador['foto']
                 ]);
             }
 
-            for ($i = 1; $i<=6; $i++){
+            for ($i = 1; $i <= 7; $i++) {
                 DB::table('colaborador_evento')->insert([
-                    'no_colaborador'=>$datosColaborador['no_colaborador'],
-                    'idEventos_Especiales'=>$i,
-                    'entrega'=> '0'
+                    'no_colaborador' => $datosColaborador['no_colaborador'],
+                    'idEventos_Especiales' => $i,
+                    'entrega' => '0'
                 ]);
+            }
+            if ($request->edad_hijo != null) {
+                $datosHijos = $request->edad_hijo;
+                $finalArray = array();
+                foreach ($datosHijos as $key => $value) {
+                    array_push($finalArray, array(
+                        'edad_hijo' => $request->edad_hijo = $value,
+                        'escolaridad_hijo' => $request->escolaridad_hijo[$key]
+                    ));
+                    DB::table('hijos')->insert([
+                        'no_colaborador' => $datosColaborador['no_colaborador'],
+                        'edad' => $request->edad_hijo = $value,
+                        'idEscolaridad' => $request->escolaridad_hijo[$key]
+                    ]);
+                }
+            }
+
+            if ($request->nombre_contacto != null) {
+                $datosContacto = $request->nombre_contacto;
+                $finalArray2 = array();
+                foreach ($datosContacto as $key => $value) {
+                    array_push($finalArray2, array(
+                        'nombre_contacto' => $request->nombre_contacto = $value,
+                        'parentesco_contacto' => $request->parentesco_contacto[$key],
+                        'telefono_contacto' => $request->telefono_contacto[$key],
+                        'domicilio_contacto' => $request->domicilio_contacto[$key]
+                    ));
+                    DB::table('contactos_emergencia')->insert([
+                        'no_colaborador' => $datosColaborador['no_colaborador'],
+                        'nombre' => $request->nombre_contacto = $value,
+                        'parentesco' => $request->parentesco_contacto[$key],
+                        'telefono' => $request->telefono_contacto[$key],
+                        'domicilio' => $request->domicilio_contacto[$key]
+                    ]);
+                }
             }
 
             //return response()->json($datosColaborador);
             return redirect('empleado/consulta')->with('alertSuccess', 'Colaborador registrado con éxito');
-        } catch (\Exception $exception) {
+        /* } catch (\Exception $exception) {
             //return response()->json($datosColaborador);
             return redirect()->back()->with('alertDanger', 'El Colaborador ya existe');
-        }
-        //return response()->json($datosColaborador);
+        } */
         //return redirect('empleado/create')->with('alert','Empleado agregado con éxito');
 
         //return response()->json($datosColaborador);
@@ -236,6 +289,8 @@ class EmpleadoController extends Controller
      */
     public function edit($no_colaborador)
     {
+        /* $datosHijos = DB::table('hijos')->where('no_colaborador', $no_colaborador)->get();
+        return response()->json($datosHijos); */
         try {
             $datosColaborador = DB::table('colaborador')->where('no_colaborador', $no_colaborador)->first();
             $datosClaves = DB::table('clave_radio')->get();
@@ -244,6 +299,8 @@ class EmpleadoController extends Controller
             $datosRutas = DB::table('ruta_transporte')->get();
             $datosRangos = DB::table('rango_factor')->get();
             $datosSupervisores = DB::table('colaborador')->select('no_colaborador', 'nombre', 'ap_paterno', 'ap_materno')->get();
+            $datosHijos = DB::table('hijos')->where('no_colaborador', $no_colaborador)->get();
+            $datosEscolaridad = DB::table('escolaridad')->get();
 
             $datosPuestos = DB::table('puesto')
                 ->join('nivel', 'nivel.Id_nivel', 'puesto.id_nivel')
@@ -270,7 +327,9 @@ class EmpleadoController extends Controller
                 ->with('rangos', $datosRangos)
                 ->with('supervisores', $datosSupervisores)
                 ->with('fechaQuinquenio', $fechaQuinquenio)
-                ->with('colaboradorEvento', $colaboradorEvento);
+                ->with('colaboradorEvento', $colaboradorEvento)
+                ->with('datosHijos',$datosHijos)
+                ->with('datosEscolaridad',$datosEscolaridad);
         } catch (\Exception $exception) {
             return redirect()->back()->with('alertDanger', 'El Colaborador no existe');
         }
@@ -421,10 +480,10 @@ class EmpleadoController extends Controller
                     ]);
             }
             //return response()->json($datosColaborador);
-            return redirect()->back() ->with('alertSuccess', 'Los datos del colaborador han sido modificados correctamente');
+            return redirect()->back()->with('alertSuccess', 'Los datos del colaborador han sido modificados correctamente');
         } catch (\Exception $exception) {
             //return response()->json($datosColaborador);
-            return redirect()->back() ->with('alertDanger', 'Ha ocurrido un error al intentar modificar los datos');
+            return redirect()->back()->with('alertDanger', 'Ha ocurrido un error al intentar modificar los datos');
         }
 
         //return view('empleado.edit', compact('empleado'));
