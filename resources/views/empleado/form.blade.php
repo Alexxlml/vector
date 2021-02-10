@@ -112,7 +112,32 @@
                     <input type="date" name="fecha_nacimiento" class="form-control" id="inputFechaNacimiento"
                         value="{{ isset($datosColaborador->fecha_nacimiento) ? $datosColaborador->fecha_nacimiento : old('fecha_nacimiento') }}">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
+                    <label for="edoCivil">Estado Civil</label>
+                    <select id="edoCivil" name="edoCivil" class="form-control">
+                        @if (isset($datosColaborador->estado_civil))
+                            @if ($datosColaborador->estado_civil == 1)
+                                <option value="1" selected="selected">Soltero(a)</option>
+                                <option value="2">Casado(a)</option>
+                                <option value="3">Unión Libre</option>
+                            @elseif($datosColaborador->estado_civil == 2)
+                                <option value="1">Soltero(a)</option>
+                                <option value="2" selected="selected">Casado(a)</option>
+                                <option value="3">Unión Liibre</option>
+                            @elseif($datosColaborador->estado_civil == 3)
+                                <option value="1">Soltero(a)</option>
+                                <option value="2">Casado(a)</option>
+                                <option value="3" selected="selected">Unión Libre</option>
+                            @endif
+                        @else
+                            <option value="1">Soltero(a)</option>
+                            <option value="2">Casado(a)</option>
+                            <option value="3">Unión Libre</option>
+                        @endif
+
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
                     <label for="inputHijos">¿Tiene Hijos?</label>
                     <select id="inputHijos" name="paternidad" class="form-control">
                         @if (isset($datosColaborador->paternidad))
@@ -131,7 +156,7 @@
                     </select>
                 </div>
             </div>
-            {{-- Fin formulario editar --}}
+            
 
             {{-- Inicio Tabla de hijos --}}
             <div class="form-row" id="tablaHijos">
@@ -198,20 +223,6 @@
                                                         class="btn btn-danger deleteHijo">-</a></td>
                                             </tr>
                                         @endforeach
-                                    @else
-                                        <tr>
-                                            <td><input type="text" name="edad_hijo[]" id="edad_hijo"
-                                                    class="form-control" value="{{ $hijo->edad }}"></td>
-                                            <td><select id="escolaridad_hijo" name="escolaridad_hijo[]"
-                                                    class="form-control">
-                                                    <option value="1">Jardín de niños</option>
-                                                    <option value="2">Primaria</option>
-                                                    <option value="3">Secundaria</option>
-                                                    <option value="4">Preparatoria</option>
-                                                    <option value="5">Universidad</option>
-                                                </select>
-                                            </td>
-                                        </tr>
                                     @endif
                                 </tbody>
                             </table>
@@ -220,8 +231,9 @@
                 </div>
             </div>
             {{-- Fin Tabla de hijos --}}
+            {{-- Fin formulario editar --}}
         @else
-            {{-- Inicio formulario crear --}}
+            {{-- Inicio formulario de creación --}}
             <div class="form-row">
                 <div class="form-group col-md-3">
                     @if (isset($datosColaborador->foto))
@@ -302,21 +314,21 @@
                     <select id="edoCivil" name="edoCivil" class="form-control">
                         @if (isset($datosColaborador->estado_civil))
                             @if ($datosColaborador->estado_civil == 1)
-                                <option value="1" selected="selected">Soltero</option>
-                                <option value="2">Casado</option>
+                                <option value="1" selected="selected">Soltero(a)</option>
+                                <option value="2">Casado(a)</option>
                                 <option value="3">Unión Libre</option>
                             @elseif($datosColaborador->estado_civil == 2)
-                                <option value="1">Soltero</option>
-                                <option value="2" selected="selected">Casado</option>
+                                <option value="1">Soltero(a)</option>
+                                <option value="2" selected="selected">Casado(a)</option>
                                 <option value="3">Unión Liibre</option>
                             @elseif($datosColaborador->estado_civil == 3)
-                                <option value="1">Soltero</option>
-                                <option value="2">Casado</option>
+                                <option value="1">Soltero(a)</option>
+                                <option value="2">Casado(a)</option>
                                 <option value="3" selected="selected">Unión Libre</option>
                             @endif
                         @else
-                            <option value="1">Soltero</option>
-                            <option value="2">Casado</option>
+                            <option value="1">Soltero(a)</option>
+                            <option value="2">Casado(a)</option>
                             <option value="3">Unión Libre</option>
                         @endif
 
@@ -361,21 +373,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tb_hijos">
-                                    <tr>
-                                        <td><input type="text" name="edad_hijo[]" id="edad_hijo" class="form-control">
-                                        </td>
-                                        <td><select id="escolaridad_hijo" name="escolaridad_hijo[]"
-                                                class="form-control">
-                                                <option value="1">Jardín de niños</option>
-                                                <option value="2">Primaria</option>
-                                                <option value="3">Secundaria</option>
-                                                <option value="4">Preparatoria</option>
-                                                <option value="5">Universidad</option>
-                                            </select>
-                                        </td>
-                                        <th class="text-center"><a href="javascript:;"
-                                                class="btn btn-danger deleteHijo">-</a></th>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -399,11 +397,11 @@
             <div class="form-group col-md-3">
                 <label for="inputCorreo">Municipio</label>
                 <input type="text" name="municipio" placeholder="Municipio" id="inputMunicipio"
-                    value="{{ isset($datosColaborador->Municipio) ? $datosColaborador->Municipio : old('municipio') }}"
+                    value="{{ isset($datosColaborador->municipio) ? $datosColaborador->municipio : old('municipio') }}"
                     class="form-control">
             </div>
             <div class="form-group col-md-3">
-                <label for="inputCorreo">Estado</label>
+                <label for="inputEstado">Estado</label>
                 <input type="text" name="estado" placeholder="Estado" id="inputEstado"
                     value="{{ isset($datosColaborador->estado) ? $datosColaborador->estado : old('estado') }}"
                     class="form-control">
@@ -503,7 +501,7 @@
 
         @if (isset($datosColaborador))
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
                     <label for="selectNivel">Puesto</label>
                     <select id="selectNivel" name="puesto" class="form-control">
 
@@ -547,40 +545,50 @@
                 <div class="form-group col-md-3">
                     <label for="selectSupervisor">Jefe Directo</label>
                     <select id="selectSupervisor" name="supervisor" class="form-control">
-                        @foreach ($supervisores as $supervisor)
+                        
                             @if (isset($datosColaborador->supervisor))
-                                @if ($datosColaborador->supervisor == $supervisor->no_colaborador)
-                                    <option value="{{ $supervisor->no_colaborador }}" selected="selected">
-                                        {{ $supervisor->nombre }} {{ $supervisor->ap_paterno }}
-                                        {{ $supervisor->ap_materno }}
-                                    </option>
-                                @else
+                                @foreach ($supervisores as $supervisor)
+                                    @if ($datosColaborador->supervisor == $supervisor->no_colaborador)
+                                        <option value="{{ $supervisor->no_colaborador }}" selected="selected">
+                                            {{ $supervisor->nombre }} {{ $supervisor->ap_paterno }}
+                                            {{ $supervisor->ap_materno }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $supervisor->no_colaborador }}">{{ $supervisor->nombre }}
+                                            {{ $supervisor->ap_paterno }} {{ $supervisor->ap_materno }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @else
+                                <option value="" selected></option>
+                                @foreach ($supervisores as $supervisor)
                                     <option value="{{ $supervisor->no_colaborador }}">{{ $supervisor->nombre }}
                                         {{ $supervisor->ap_paterno }} {{ $supervisor->ap_materno }}
                                     </option>
-                                @endif
-                            @else
-                                <option value="{{ $supervisor->no_colaborador }}">{{ $supervisor->nombre }}
-                                    {{ $supervisor->ap_paterno }} {{ $supervisor->ap_materno }}
-                                </option>
+                                @endforeach
                             @endif
-                        @endforeach
+                        
                     </select>
                 </div>
-            </div>
-
-            <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="inputTelFijo">Teléfono Fijo</label>
                     <input type="text" name="tel_fijo" class="form-control" id="inputTelFijo"
                         placeholder="Teléfono Fijo"
                         value="{{ isset($datosColaborador->tel_fijo) ? $datosColaborador->tel_fijo : old('tel_fijo') }}">
                 </div>
+            </div>
+
+            <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="inputTelMovil">Teléfono Móvil</label>
                     <input type="text" name="tel_movil" class="form-control" id="inputTelMovil"
                         placeholder="Teléfono Móvil"
                         value="{{ isset($datosColaborador->tel_movil) ? $datosColaborador->tel_movil : old('tel_movil') }}">
+               </div>
+                <div class="form-group col-md-3">
+                    <label for="inputTelRecados">Teléfono para Recados</label>
+                    <input type="text" name="tel_recados" class="form-control" id="inputTelRecados" placeholder="Teléfono Móvil"
+                        value="{{ isset($datosColaborador->tel_recados) ? $datosColaborador->tel_recados : old('tel_recados') }}">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputExtension">Extensión</label>
@@ -620,6 +628,50 @@
                     </select>
                 </div>
             </div>
+
+            {{-- Inicio tabla contactos emergencia editar --}}
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group col-md-12">
+                    <h5>Contactos de Emergencia</h5>
+                </div>
+                <table class="table table-striped table-bordered dt-responsive nowrap">
+                    <thead class="thead-light" id="th_contactos">
+                        <tr>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Parentesco</th>
+                            <th class="text-center">Teléfono</th>
+                            <th class="text-center">Domicilio</th>
+                            <th class="text-center"><a href="javascript:;" class="btn btn-info addContacto">+</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tb_contactos">
+                        @if (@isset($datosContactos))
+                            @foreach ($datosContactos as $contacto)
+                        <tr>
+                            <td><input type="text" name="nombre_contacto[]" id="nombre_contacto" class="form-control" value="{{ $contacto->nombre }}"
+                            </td>
+                            <td><input type="text" name="parentesco_contacto[]" id="parentesco_contacto"
+                                    class="form-control" value="{{ $contacto->parentesco }}"></td>
+                            <td><input type="text" name="telefono_contacto[]" id="telefono_contacto"
+                                    class="form-control" value="{{ $contacto->telefono }}"></td>
+                            <td><input type="text" name="domicilio_contacto[]" id="domicilio_contacto"
+                                    class="form-control" value="{{ $contacto->domicilio }}"></td>
+                            <td class="text-center"><a href="javascript:;" class="btn btn-danger deleteContacto">-</a>
+                            </td>
+                        </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- Fin tabla contactos emergencia editar --}}
 
             <div class="form-row">
                 <div class="form-group col-md-3">
@@ -786,17 +838,27 @@
     <div class="form-group col-md-2 text-center">
         <label for="">Quinquenio</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="quinquenioEntrega" class="custom-control-input" id="switchQEntrega" @if (isset($fechaQuinquenio))  @if ((!$fechaQuinquenio==5) | (!$fechaQuinquenio==10) | (!$fechaQuinquenio==15) | (!$fechaQuinquenio==20)
-                | (!$fechaQuinquenio==25) | (!$fechaQuinquenio==30) | (!$fechaQuinquenio==35) | (!$fechaQuinquenio==40)
-                | (!$fechaQuinquenio==45) | (!$fechaQuinquenio==50))
-            disabled
-        @else @endif
-        @else
-            {{ old('quinquenioAplica') }}
+            <input type="checkbox" name="quinquenioEntrega" class="custom-control-input" id="switchQEntrega" 
+            @if (isset($fechaQuinquenio))  
+                @if (($fechaQuinquenio==5) | ($fechaQuinquenio==10) | ($fechaQuinquenio==15) | ($fechaQuinquenio==20)
+                    | ($fechaQuinquenio==25) | ($fechaQuinquenio==30) | ($fechaQuinquenio==35) | ($fechaQuinquenio==40)
+                    | ($fechaQuinquenio==45) | ($fechaQuinquenio==50))
+                    
+                @else 
+                disabled
+                @endif
+            @else
+                {{ old('quinquenioAplica') }}
+            @endif
+
+            @if (isset($colaboradorEvento[0]))
+                @if ($colaboradorEvento[0]->entrega==1)
+                    checked="checked"
+                @endif
             @endif
 
             >
-            <label class="custom-control-label" for="quinquenioEntrega">Entregado</label>
+            <label class="custom-control-label" for="switchQEntrega">Entregado</label>
         </div>
     </div>
 
@@ -815,38 +877,6 @@
 
 <div class="form-row">
     <div class="form-group col-md-2 text-center">
-        <label for="DNAplica">Día del Niño</label>
-        <div class="custom-control custom-switch">
-            <input type="checkbox" name="DNAplica" class="custom-control-input" id="switchDNAplica" @if (isset($datosColaborador))  @if ($datosColaborador->paternidad==1)
-            checked="checked" disabled
-        @else
-            disabled @endif
-        @else
-            {{ old('DNAplica') }}
-            @endif
-
-            >
-            <label class="custom-control-label" for="switchDNAplica">Aplica</label>
-        </div>
-    </div>
-    <div class="form-group col-md-2 text-center">
-        <label for="DNEntregado">Día del Niño</label>
-        <div class="custom-control custom-switch">
-            <input type="checkbox" name="DNEntregado" class="custom-control-input" id="switchDNEntregado" @if (isset($colaboradorEvento[2]))  @if ($colaboradorEvento[2]->entrega==1)
-            checked="checked"
-        @else
-            @if ($datosColaborador->paternidad == 0)
-                disabled @endif
-            @endif
-        @else
-            disabled
-            @endif
-
-            >
-            <label class="custom-control-label" for="switchDNEntregado">Entregado</label>
-        </div>
-    </div>
-    <div class="form-group col-md-2 text-center">
         <label for="DMAplica">Día de la Madre</label>
         <div class="custom-control custom-switch">
             <input type="checkbox" name="DMAplica" class="custom-control-input" id="switchDMAplica" @if (isset($datosColaborador))  @if ($datosColaborador->paternidad==1 && $datosColaborador->genero==2)
@@ -863,16 +893,19 @@
     <div class="form-group col-md-2 text-center">
         <label for="inputPassword">Día de la Madre</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="DMEntregado" class="custom-control-input" id="switchDMEntregado" @if (isset($colaboradorEvento[3]))  @if ($colaboradorEvento[3]->entrega==1)
-            checked="checked"
-        @else
-            @if ($datosColaborador->paternidad == 1 && $datosColaborador->genero == 2)
-                disabled
+            <input type="checkbox" name="DMEntregado" class="custom-control-input" id="switchDMEntregado" 
+            @if (isset($colaboradorEvento[2]))  
+                @if ($colaboradorEvento[2]->entrega==1)
+                    checked="checked"
+                @else
+                    @if ($datosColaborador->paternidad == 1 && $datosColaborador->genero != 2)
+                        disabled
+                    @elseif ($datosColaborador->paternidad == 0)
+                        disabled
+                    @endif
+                @endif
             @else
-                disabled @endif
-            @endif
-        @else
-            disabled
+                disabled
             @endif
 
             >
@@ -898,50 +931,74 @@
         <label for="inputPassword">Día del Padre</label>
         <div class="custom-control custom-switch">
             <input type="checkbox" name="DPEntregado" class="custom-control-input" id="switchDPEntregado" 
-                @if (isset($colaboradorEvento[4]))  
-                    @if ($colaboradorEvento[4]->entrega==1)
-                        checked="checked"
-                        @if ($datosColaborador->paternidad == 0)
-                            disabled
-                            @if ($datosColaborador->paternidad == 1 && $datosColaborador->genero != 1)
-                                    disabled
-                                @else
-                                    checked="checked"
-                            @endif
-                        @endif
+                @if (isset($colaboradorEvento[3]))  
+                @if ($colaboradorEvento[3]->entrega==1)
+                    checked="checked"
+                @else
+                    @if ($datosColaborador->paternidad == 1 && $datosColaborador->genero != 1)
+                        disabled
+                    @elseif ($datosColaborador->paternidad == 0)
+                        disabled
                     @endif
                 @endif
+            @else
+                disabled
+            @endif
 
             >
             <label class="custom-control-label" for="switchDPEntregado">Entregado</label>
         </div>
     </div>
-</div>
 
-<div class="form-row">
     <div class="form-group col-md-2 text-center">
-        <label for="inputPassword">Útiles Escolares</label>
+        <label for="UEAplica">Útiles Escolares</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="UEAplica" class="custom-control-input" id="switchUEAplica" disabled>
+            <input type="checkbox" name="UEAplica" class="custom-control-input" id="switchUEAplica"
+            
+            @if (@isset($datosHijos))
+                @foreach ($datosHijos as $hijo)
+                    @if ($hijo->idEscolaridad != 5)
+                        checked="checked" disabled
+                    @else
+                        disabled
+                    @endif
+                @endforeach
+            @else
+                
+            @endif
+
+            @if ($utilesEscolares == 0)
+                disabled
+            @endif
+            
+            >
             <label class="custom-control-label" for="switchUEAplica">Aplica</label>
         </div>
     </div>
     <div class="form-group col-md-2 text-center">
         <label for="inputPassword">Útiles Escolares</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="UEEntregado" class="custom-control-input" id="switchUEEntregado" @if (isset($colaboradorEvento[5]))  @if ($colaboradorEvento[5]->entrega==1)
-            checked="checked"
-        @else
-            disabled @endif
-        @else
-            {{ old('UEEntregado') }}
+             
+            @if (isset($colaboradorEvento[4]))  
+                @if ($colaboradorEvento[4]->entrega == 1)
+                    <input type="checkbox" name="UEEntregado" class="custom-control-input" id="switchUEEntregado" checked="checked">
+                @else
+                    @if ($utilesEscolares == 1)
+                        <input type="checkbox" name="UEEntregado" class="custom-control-input" id="switchUEEntregado">
+                    @else
+                        <input type="checkbox" name="UEEntregado" class="custom-control-input" id="switchUEEntregado" disabled>
+                    @endif
+                @endif
+            @else
+                <input type="checkbox" name="UEEntregado" class="custom-control-input" id="switchUEEntregado" value="{{ old('UEEntregado') }}">
             @endif
-
-            >
-            <label class="custom-control-label" for="switchUEEntregado">Entregado</label>
+                <label class="custom-control-label" for="switchUEEntregado">Entregado</label>
         </div>
     </div>
-    <div class="form-group col-md-2 text-center">
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-3 text-center">
         <label for="inputPassword">Regalo 60 Aniversario</label>
         <div class="custom-control custom-switch">
             <input type="checkbox" name="R60Aplica" class="custom-control-input" id="switchR60Aplica" checked="checked"
@@ -949,23 +1006,25 @@
             <label class="custom-control-label" for="switchR60Aplica">Aplica</label>
         </div>
     </div>
-    <div class="form-group col-md-2 text-center">
+    <div class="form-group col-md-3 text-center">
         <label for="inputPassword">Regalo 60 Aniversario</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="R60Entregado" class="custom-control-input" id="switchR60Entregado" @if (isset($colaboradorEvento[6]))  @if ($colaboradorEvento[6]->entrega==1)
-            checked="checked"
-            disabled
-        @else
-            {{ old('R60Entregado') }} @endif
-        @else
-            {{ old('R60Entregado') }}
+            <input type="checkbox" name="R60Entregado" class="custom-control-input" id="switchR60Entregado" 
+            @if (isset($colaboradorEvento[5]))  
+                @if ($colaboradorEvento[5]->entrega==1)
+                    checked="checked"
+                @else
+                    {{ old('R60Entregado') }} 
+                @endif
+            @else
+                {{ old('R60Entregado') }}
             @endif
 
             >
             <label class="custom-control-label" for="switchR60Entregado">Entregado</label>
         </div>
     </div>
-    <div class="form-group col-md-2 text-center">
+    <div class="form-group col-md-3 text-center">
         <label for="inputPassword">Boleto Fiesta Fin de Año</label>
         <div class="custom-control custom-switch">
             <input type="checkbox" name="BFFAplica" class="custom-control-input" id="switchBFFAplica" checked="checked"
@@ -973,15 +1032,18 @@
             <label class="custom-control-label" for="switchBFFAplica">Aplica</label>
         </div>
     </div>
-    <div class="form-group col-md-2 text-center">
+    <div class="form-group col-md-3 text-center">
         <label for="inputPassword">Boleto Fiesta Fin de Año</label>
         <div class="custom-control custom-switch">
-            <input type="checkbox" name="BFFEntregado" class="custom-control-input" id="switchBFFEntregado" @if (isset($colaboradorEvento[7]))  @if ($colaboradorEvento[7]->entrega==1)
-            checked="checked"
-        @else
-            {{ old('BFFEntregado') }} @endif
-        @else
-            {{ old('BFFEntregado') }}
+            <input type="checkbox" name="BFFEntregado" class="custom-control-input" id="switchBFFEntregado" 
+            @if (isset($colaboradorEvento[6]))  
+                @if ($colaboradorEvento[6]->entrega==1)
+                    checked="checked"
+                @else
+                    {{ old('BFFEntregado') }} 
+                @endif
+            @else
+                {{ old('BFFEntregado') }}
             @endif
 
             >
@@ -1140,18 +1202,7 @@
                         </tr>
                     </thead>
                     <tbody id="tb_contactos">
-                        <tr>
-                            <td><input type="text" name="nombre_contacto[]" id="nombre_contacto" class="form-control">
-                            </td>
-                            <td><input type="text" name="parentesco_contacto[]" id="parentesco_contacto"
-                                    class="form-control"></td>
-                            <td><input type="text" name="telefono_contacto[]" id="telefono_contacto"
-                                    class="form-control"></td>
-                            <td><input type="text" name="domicilio_contacto[]" id="domicilio_contacto"
-                                    class="form-control"></td>
-                            <td class="text-center"><a href="javascript:;" class="btn btn-danger deleteContacto">-</a>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -1271,11 +1322,8 @@
 
     $("#tb_hijos").on('click', '.deleteHijo', function() {
         var ultimo = $('#tb_hijos tr').length;
-        if (ultimo == 1) {
-            alert('No se puede eliminar la última fila');
-        } else {
             $(this).parent().parent().remove();
-        }
+        
     });
 
 </script>
@@ -1297,11 +1345,8 @@
 
     $("#tb_contactos").on('click', '.deleteContacto', function() {
         var ultimo = $('#tb_contactos tr').length;
-        if (ultimo == 1) {
-            alert('No se puede eliminar la última fila');
-        } else {
             $(this).parent().parent().remove();
-        }
+        
     });
 
 </script>
