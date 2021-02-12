@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use PDF;
 
 class EmpleadoController extends Controller
 {
@@ -21,6 +22,12 @@ class EmpleadoController extends Controller
         $datosColaboradores = DB::table('colaborador')->get();
         //return response()->json($datosColaboradores);
         return view('empleado.index')->with('colaboradores', $datosColaboradores);
+    }
+
+    public function createPDF(){
+
+        $pdf = PDF::loadView('PDF/contrato');
+        return $pdf->stream('colaboradores.pdf');
     }
 
     /**

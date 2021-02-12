@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,10 @@ Auth::routes(['register'=>false,'reset'=>false]);
 
 Route::get('/home', [EmpleadoController::class, 'index'])->name('home');
 Route::get('/home/empleado/consulta', [EmpleadoController::class, 'show'])->name('consulta');
+Route::get('/pdf/contrato', [EmpleadoController::class, 'createPDF'])->name('contrato');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [EmpleadoController::class, 'index'])->name('home');
 });
+
+

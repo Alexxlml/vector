@@ -22,6 +22,9 @@
                 </div>
             @endif
             <div class="card-body">
+                <a href="{{ URL::to('/pdf/contrato') }}" class="btn btn-primary">Descargar lista de colaboradores</a>
+                <br>
+                <br>
                 <table id="general" class="table table-striped table-bordered dt-responsive nowrap">
                     <thead class="thead-light">
                         <tr>
